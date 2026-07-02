@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI with Purpose 2026 — Admin</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #2c5234; --blue-dk: #1e3a24;
+      --green: #059669; --red: #dc2626; --gold: #B9975B;
+      --bg: #f1f5f9; --surface: #fff; --border: #e2e8f0;
+      --text: #1e293b; --muted: #64748b; --radius: 10px;
+    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+
+    /* ── LOGIN GATE ── */
+    #loginGate {
+      position: fixed; inset: 0; background: linear-gradient(135deg, #1e3a24, #2c5234);
+      display: flex; align-items: center; justify-content: center; z-index: 999;
+    }
+    #loginGate.hidden { display: none; }
+    .login-box {
+      background: var(--surface); border-radius: 16px; padding: 2.5rem;
+      width: 100%; max-width: 380px; box-shadow: 0 24px 60px rgba(0,0,0,.3);
+      text-align: center;
+    }
+    .login-box .lock { font-size: 2.5rem; margin-bottom: .75rem; }
+    .login-box h1 { font-size: 1.3rem; font-weight: 700; margin-bottom: .25rem; }
+    .login-box p { font-size: .85rem; color: var(--muted); margin-bottom: 1.6rem; }
+    .login-box input {
+      width: 100%; padding: .65rem 1rem; border: 1.5px solid var(--border);
+      border-radius: 8px; font-size: 1rem; outline: none; margin-bottom: .75rem;
+      text-align: center; letter-spacing: .1em;
+    }
+    .login-box input:focus { border-color: var(--blue); }
+    .login-box button {
+      width: 100%; padding: .7rem; background: var(--blue); color: #fff;
+      border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer;
+    }
+    .login-box button:hover { background: var(--blue-dk); }
+    .login-error { color: var(--red); font-size: .82rem; margin-top: .5rem; display: none; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--blue); color: #fff;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 56px; box-shadow: 0 2px 6px rgba(0,0,0,.2);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .topbar .brand { font-weight: 700; font-size: 1rem; }
+    .topbar .brand span { opacity: .65; font-weight: 400; margin-left: .4rem; }
+    .topbar-actions { display: flex; gap: .75rem; align-items: center; }
+    .btn { padding: .4rem .9rem; border-radius: 7px; font-size: .83rem; font-weight: 600; cursor: pointer; border: none; }
+    .btn-outline { background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.3); }
+    .btn-outline:hover { background: rgba(255,255,255,.25); }
+    .btn-success { background: #10b981; color: #fff; }
+    .btn-success:hover { background: #059669; }
+    .btn-danger { background: transparent; color: rgba(255,255,255,.8); border: 1px solid rgba(255,255,255,.25); }
+    .btn-danger:hover { background: rgba(255,255,255,.1); color: #fff; }
+
+    /* ── LAYOUT ── */
+    .page { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    /* ── STATS ── */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+    }
+    .stat-card .num { font-size: 2rem; font-weight: 800; color: var(--blue); }
+    .stat-card .lbl { font-size: .8rem; color: var(--muted); margin-top: .1rem; }
+
+    /* ── GAS STATUS BANNER ── */
+    .gas-banner {
+      background: #fef3c7; border: 1px solid #fcd34d; border-radius: var(--radius);
+      padding: 1rem 1.4rem; margin-bottom: 2rem; font-size: .88rem;
+      display: flex; align-items: flex-start; gap: .75rem;
+    }
+    .gas-banner.connected { background: #d1fae5; border-color: #6ee7b7; }
+    .gas-banner .gas-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .gas-banner strong { display: block; margin-bottom: .2rem; }
+    .gas-url-form { display: flex; gap: .5rem; margin-top: .6rem; }
+    .gas-url-form input {
+      flex: 1; padding: .45rem .75rem; border: 1.5px solid #fcd34d;
+      border-radius: 7px; font-size: .83rem; outline: none;
+    }
+    .gas-url-form input:focus { border-color: var(--blue); }
+    .gas-url-form button { padding: .45rem .9rem; background: var(--blue); color: #fff; border: none; border-radius: 7px; font-size: .83rem; font-weight: 600; cursor: pointer; }
+
+    /* ── SEARCH ── */
+    .search-row { display: flex; gap: .75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .search-row input {
+      flex: 1; min-width: 220px; padding: .55rem 1rem; border: 1.5px solid var(--border);
+      border-radius: 8px; font-size: .9rem; outline: none;
+    }
+    .search-row input:focus { border-color: var(--blue); }
+    .search-row select {
+      padding: .55rem .85rem; border: 1.5px solid var(--border); border-radius: 8px;
+      font-size: .87rem; background: var(--surface); cursor: pointer; outline: none;
+    }
+
+    /* ── SESSION TABLES ── */
+    .session-block {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 1.2rem; overflow: hidden;
+    }
+    .session-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .9rem 1.2rem; cursor: pointer; user-select: none; gap: .5rem;
+    }
+    .session-header:hover { background: #f8fafc; }
+    .session-header-left { display: flex; align-items: center; gap: .75rem; flex: 1; min-width: 0; }
+    .session-header h3 { font-size: .93rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .session-header .meta { font-size: .78rem; color: var(--muted); white-space: nowrap; }
+    .reg-count {
+      font-size: .78rem; font-weight: 700; padding: .2rem .6rem; border-radius: 12px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .reg-count.zero { background: #f1f5f9; color: var(--muted); }
+    .reg-count.some { background: #d4e6d8; color: var(--blue); }
+    .chevron { font-size: .85rem; color: var(--muted); flex-shrink: 0; transition: transform .2s; }
+    .session-block.open .chevron { transform: rotate(180deg); }
+
+    .reg-table-wrap { display: none; border-top: 1px solid var(--border); overflow-x: auto; }
+    .session-block.open .reg-table-wrap { display: block; }
+
+    table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+    th { background: #f8fafc; text-align: left; padding: .6rem 1rem; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); border-bottom: 1px solid var(--border); }
+    td { padding: .65rem 1rem; border-bottom: 1px solid var(--border); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f8fafc; }
+    .empty-row td { color: var(--muted); font-style: italic; text-align: center; padding: 1.5rem; }
+
+    /* ── CATEGORY PILL ── */
+    .cat-Learn    { background: #dbeafe; color: #1d4ed8; }
+    .cat-Equip    { background: #d1fae5; color: #065f46; }
+    .cat-Aspire   { background: #cffafe; color: #0e7490; }
+    .cat-Disciple { background: #ede9fe; color: #6d28d9; }
+
+    .no-results { text-align: center; padding: 3rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN GATE -->
+<div id="loginGate">
+  <div class="login-box">
+    <div class="lock">🔒</div>
+    <h1>Admin Access</h1>
+    <p>AI with Purpose 2026 — Registration Dashboard</p>
+    <input type="password" id="pwInput" placeholder="Enter admin password" />
+    <button onclick="attemptLogin()">Sign In</button>
+    <div class="login-error" id="loginError">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="brand">AI with Purpose 2026 <span>Admin Dashboard</span></div>
+  <div class="topbar-actions">
+    <button class="btn btn-success" onclick="exportCSV()">Export CSV</button>
+    <button class="btn btn-outline" onclick="refreshData()">Refresh</button>
+    <button class="btn btn-danger" onclick="logout()">Log Out</button>
+  </div>
+</div>
+
+<!-- MAIN PAGE -->
+<div class="page" id="mainPage" style="display:none;">
+
+  <!-- STATS -->
+  <div class="stats-row" id="statsRow"></div>
+
+  <!-- GOOGLE APPS SCRIPT BANNER -->
+  <div class="gas-banner" id="gasBanner">
+    <div class="gas-icon">📊</div>
+    <div style="flex:1;">
+      <strong>Connect Google Sheets for cross-browser registration collection</strong>
+      Paste your Google Apps Script Web App URL below to automatically write every new registration into a Google Sheet. See <code>google-apps-script.js</code> for setup instructions.
+      <div class="gas-url-form">
+        <input type="url" id="gasUrlInput" placeholder="https://script.google.com/macros/s/.../exec" />
+        <button onclick="saveGasUrl()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH + FILTER -->
+  <div class="search-row">
+    <input type="text" id="searchInput" placeholder="Search by name or email..." oninput="renderBreakouts()" />
+    <select id="catFilter" onchange="renderBreakouts()">
+      <option value="">All Categories</option>
+      <option>Learn</option>
+      <option>Equip</option>
+      <option>Aspire</option>
+      <option>Disciple</option>
+    </select>
+  </div>
+
+  <!-- BREAKOUT SESSION LIST -->
+  <div id="sessionsList"></div>
+  <div id="noResults" class="no-results" style="display:none;">No sessions match your filters.</div>
+</div>
+
+<script>
+/* ── BREAKOUT DATA (must match index.html) ── */
+const BREAKOUT_SESSIONS = [
+  {
+    id: 101,
+    category: "Learn",
+    title: "Cultivating Critical AI Literacy in the Classroom",
+    speaker: { name: "Jordanna Court", role: "Education Leadership Professional | Developer of Young Minds", org: "Pine Crest School" },
+  },
+  {
+    id: 102,
+    category: "Learn",
+    title: "Conceptual Introduction to AI for our Youngest Learners",
+    speaker: { name: "Jordanna Court", role: "Education Leadership Professional | Developer of Young Minds", org: "Pine Crest School" },
+  },
+  {
+    id: 103,
+    category: "Equip",
+    title: "Using AI in Math Classrooms (Snorkl and FlintK12)",
+    speaker: { name: "Jordanna Court", role: "Education Leadership Professional | Developer of Young Minds", org: "Pine Crest School" },
+  },
+  {
+    id: 104,
+    category: "Equip",
+    title: "Build Your Own AI Classroom Assistant",
+    speaker: { name: "Kelly Schuster-Paredes", role: "Educational Technology Consultant", org: "" },
+  },
+  {
+    id: 105,
+    category: "Learn",
+    title: "Building Proficiency in Coding through Experimentation with Art and Music",
+    speaker: { name: "Kelly Schuster-Paredes", role: "Educational Technology Consultant", org: "" },
+  },
+  {
+    id: 106,
+    category: "Equip",
+    title: "Flint K12",
+    speaker: { name: "Kelly Schuster-Paredes", role: "Educational Technology Consultant", org: "" },
+  },
+  {
+    id: 107,
+    category: "Equip",
+    title: "Differentiating Instruction with AI",
+    speaker: { name: "Jessie Metzger", role: "AI Education Specialist", org: "" },
+  },
+  {
+    id: 108,
+    category: "Aspire",
+    title: "A Continuous Framework for Sustainable AI Growth",
+    speaker: { name: "Jessie Metzger", role: "AI Education Specialist", org: "" },
+  },
+];
+
+const STORAGE_KEY    = "aiwithpurpose2026_registrations";
+const AUTH_KEY       = "educon2026_admin_auth";
+const GAS_URL_KEY    = "educon2026_gas_url";
+/* ── Change this hash to set a new password.
+      Default password: EduAdmin2026
+      To generate a new hash: open browser console, run:
+        crypto.subtle.digest('SHA-256', new TextEncoder().encode('YourPassword'))
+          .then(b => console.log([...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')))     ── */
+const PASSWORD_HASH  = "1a3a73b4a0b179ca264eeb8808168475a795290a73169edbea5586789680ccc2";
+
+/* ── AUTH ── */
+async function sha256hex(str) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+  return [...new Uint8Array(buf)].map(x => x.toString(16).padStart(2, "0")).join("");
+}
+
+async function attemptLogin() {
+  const pw = document.getElementById("pwInput").value;
+  const hash = await sha256hex(pw);
+  if (hash === PASSWORD_HASH) {
+    sessionStorage.setItem(AUTH_KEY, "1");
+    document.getElementById("loginGate").classList.add("hidden");
+    document.getElementById("mainPage").style.display = "block";
+    initDashboard();
+  } else {
+    document.getElementById("loginError").style.display = "block";
+    document.getElementById("pwInput").value = "";
+    document.getElementById("pwInput").focus();
+  }
+}
+
+document.getElementById("pwInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") attemptLogin();
+});
+
+function logout() {
+  sessionStorage.removeItem(AUTH_KEY);
+  location.reload();
+}
+
+/* ── INIT ── */
+async function initDashboard() {
+  const gasUrl = localStorage.getItem(GAS_URL_KEY) || "";
+  if (gasUrl) {
+    document.getElementById("gasUrlInput").value = gasUrl;
+    const banner = document.getElementById("gasBanner");
+    banner.classList.add("connected");
+    banner.querySelector("strong").textContent = "Google Sheets connected";
+    banner.querySelector("p, strong + *") // update description
+    banner.innerHTML = `<div class="gas-icon">✅</div><div style="flex:1;"><strong>Google Sheets connected</strong>New registrations from index.html are automatically written to your Sheet.<div class="gas-url-form"><input type="url" id="gasUrlInput" value="${gasUrl}" placeholder="https://script.google.com/macros/s/.../exec" /><button onclick="saveGasUrl()">Update</button></div></div>`;
+  }
+  await renderStats();
+  await renderBreakouts();
+}
+
+/* ── GAS URL ── */
+function saveGasUrl() {
+  const url = document.getElementById("gasUrlInput").value.trim();
+  if (url) localStorage.setItem(GAS_URL_KEY, url);
+  else localStorage.removeItem(GAS_URL_KEY);
+  location.reload();
+}
+
+/* ── DATA ── */
+function loadRegistrations() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+  catch { return {}; }
+}
+
+async function loadRegistrationsFromGAS() {
+  const gasUrl = localStorage.getItem(GAS_URL_KEY);
+  if (!gasUrl) return null;
+  try {
+    const res = await fetch(`${gasUrl}?action=getAll`);
+    const json = await res.json();
+    return json.status === "ok" ? json.registrations : null;
+  } catch {
+    return null;
+  }
+}
+
+async function refreshData() { await renderStats(); await renderBreakouts(); }
+
+/* ── STATS ── */
+async function renderStats() {
+  const regs = (await loadRegistrationsFromGAS()) || loadRegistrations();
+  let totalRegs = 0, uniqueEmails = new Set(), withSignups = 0;
+  BREAKOUT_SESSIONS.forEach(s => {
+    const arr = regs[s.id] || [];
+    totalRegs += arr.length;
+    arr.forEach(r => uniqueEmails.add(r.email));
+    if (arr.length) withSignups++;
+  });
+
+  document.getElementById("statsRow").innerHTML = `
+    <div class="stat-card"><div class="num">${totalRegs}</div><div class="lbl">Total Registrations</div></div>
+    <div class="stat-card"><div class="num">${uniqueEmails.size}</div><div class="lbl">Unique Attendees</div></div>
+    <div class="stat-card"><div class="num">${withSignups}</div><div class="lbl">Sessions with Sign-ups</div></div>
+    <div class="stat-card"><div class="num">${BREAKOUT_SESSIONS.length - withSignups}</div><div class="lbl">Sessions with No Sign-ups</div></div>
+  `;
+}
+
+/* ── BREAKOUTS ── */
+async function renderBreakouts() {
+  const regs  = (await loadRegistrationsFromGAS()) || loadRegistrations();
+  const query = document.getElementById("searchInput").value.toLowerCase();
+  const cat   = document.getElementById("catFilter").value;
+  const list  = document.getElementById("sessionsList");
+  const noRes = document.getElementById("noResults");
+
+  let filtered = BREAKOUT_SESSIONS.filter(s => {
+    if (cat && s.category !== cat) return false;
+    if (query) {
+      const sessionRegs = regs[s.id] || [];
+      const matchSession = s.title.toLowerCase().includes(query) || s.speaker.name.toLowerCase().includes(query);
+      const matchReg = sessionRegs.some(r => r.name.toLowerCase().includes(query) || r.email.includes(query));
+      if (!matchSession && !matchReg) return false;
+    }
+    return true;
+  });
+
+  if (!filtered.length) {
+    list.innerHTML = "";
+    noRes.style.display = "block";
+    return;
+  }
+  noRes.style.display = "none";
+
+  list.innerHTML = filtered.map(s => {
+    const arr = (regs[s.id] || []).filter(r => {
+      if (!query) return true;
+      return r.name.toLowerCase().includes(query) || r.email.includes(query);
+    });
+    const count = (regs[s.id] || []).length;
+
+    const rows = arr.length
+      ? arr.map((r, i) => `
+          <tr>
+            <td>${i + 1}</td>
+            <td>${escHtml(r.name)}</td>
+            <td>${escHtml(r.email)}</td>
+            <td>${r.ts ? new Date(r.ts).toLocaleString() : "—"}</td>
+          </tr>`).join("")
+      : `<tr class="empty-row"><td colspan="4">No registrations yet</td></tr>`;
+
+    return `
+      <div class="session-block" id="block-${s.id}">
+        <div class="session-header" onclick="toggleBlock(${s.id})">
+          <div class="session-header-left">
+            <span class="track-pill cat-${s.category}" style="font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:.15rem .55rem;border-radius:12px;">${s.category}</span>
+            <h3>${escHtml(s.title)}</h3>
+          </div>
+          <span class="meta">${escHtml(s.speaker.name)}${s.speaker.org ? ' — ' + escHtml(s.speaker.org) : ''}</span>
+          <span class="reg-count ${count ? 'some' : 'zero'}">${count} registered</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="reg-table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Registered At</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function toggleBlock(id) {
+  document.getElementById(`block-${id}`).classList.toggle("open");
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+/* ── CSV EXPORT ── */
+function exportCSV() {
+  const regs = loadRegistrations();
+  const rows = [["Session ID","Session Title","Category","Speaker","Organization","Registrant Name","Registrant Email","Registered At"]];
+  BREAKOUT_SESSIONS.forEach(s => {
+    const arr = regs[s.id] || [];
+    if (!arr.length) {
+      rows.push([s.id, s.title, s.category, s.speaker.name, s.speaker.org, "", "", ""]);
+    } else {
+      arr.forEach(r => {
+        rows.push([s.id, s.title, s.category, s.speaker.name, s.speaker.org, r.name, r.email, r.ts ? new Date(r.ts).toISOString() : ""]);
+      });
+    }
+  });
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `aiwithpurpose2026_registrations_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+/* ── AUTO-CHECK SESSION AUTH ON LOAD ── */
+if (sessionStorage.getItem(AUTH_KEY) === "1") {
+  document.getElementById("loginGate").classList.add("hidden");
+  document.getElementById("mainPage").style.display = "block";
+  initDashboard();
+} else {
+  setTimeout(() => document.getElementById("pwInput").focus(), 100);
+}
+</script>
+</body>
+</html>

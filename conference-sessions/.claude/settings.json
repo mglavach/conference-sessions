@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:mglavach.github.io)",
+      "WebFetch(domain:www.wcsmiami.org)"
+    ]
+  }
+}
