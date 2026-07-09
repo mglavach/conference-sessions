@@ -442,7 +442,7 @@ function renderSchedule() {
         </div>
         <div class="sched-item-right">
           ${item.speaker ? `<div class="sched-item-speaker">${item.speaker}</div>` : ''}
-          ${item.link ? `<a class="sched-view-btn sched-view-btn-green" href="${item.link.url}" target="_top">${item.link.label}</a>` : ''}
+          ${item.link ? `<a class="sched-view-btn sched-view-btn-green" href="${item.link.url}">${item.link.label}</a>` : ''}
           <div class="sched-item-location">${item.location}</div>
         </div>
         ${isBreakoutGroup ? `
