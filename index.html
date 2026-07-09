@@ -55,6 +55,7 @@
     .lad-aspire  .lad-label { color: #1d6b8a; }
     .lad-disciple .lad-label { color: #6d28d9; }
     .lad-cell h3 { font-size: .95rem; font-weight: 700; margin-bottom: .4rem; }
+    .lad-learn h3 { white-space: nowrap; }
     .lad-cell p  { font-size: .82rem; color: var(--muted); line-height: 1.5; }
     .lad-arrow {
       position: absolute; right: -14px; top: 50%; transform: translateY(-50%);
@@ -89,8 +90,11 @@
     #breakouts .filter-btn[data-slot] { color: var(--muted); border-color: var(--border); background: var(--surface); }
     #breakouts .filter-btn[data-slot].active,
     #breakouts .filter-btn[data-slot]:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+    #breakouts .filter-btn[data-grade] { color: var(--muted); border-color: var(--border); background: var(--surface); }
+    #breakouts .filter-btn[data-grade].active,
+    #breakouts .filter-btn[data-grade]:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
 
-    .breakout-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 1.4rem; }
+    .breakout-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
 
     .cat-pill {
       font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em;
@@ -124,34 +128,28 @@
 
     .breakout-card {
       background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius);
-      padding: 1.3rem 1.4rem; display: flex; flex-direction: column; gap: .65rem;
+      padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .5rem;
       transition: box-shadow .2s, border-color .2s;
     }
     .breakout-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,.1); border-color: var(--blue); }
-    .breakout-card h3 { font-size: 1rem; font-weight: 700; line-height: 1.35; margin-top: .55rem; color: #2c5234; }
-    .breakout-card .desc { font-size: .84rem; color: #2c5234; line-height: 1.55; flex: 1; }
-    .breakout-card-top { display: flex; flex-direction: column; gap: .75rem; }
-    .breakout-tags { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
-    .speaker-top { display: flex; align-items: center; gap: .75rem; padding: .6rem 0 .1rem; }
+    .breakout-card h3 { font-size: 1rem; font-weight: 700; line-height: 1.35; margin-top: .3rem; color: #2c5234; }
+    .breakout-card .desc { font-size: .84rem; color: #2c5234; line-height: 1.3; flex: 1; }
+    .breakout-card-top { display: flex; flex-direction: column; gap: .5rem; }
+    .breakout-tags { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+    .speaker-top { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem; padding: .35rem 0 0; }
+    .speaker-entry { display: flex; align-items: center; gap: .5rem; }
     .bs-avatar {
       width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
       font-size: .9rem; font-weight: 700; color: #fff;
     }
     .speaker-top .bs-avatar { width: 42px; height: 42px; font-size: .85rem; }
-    .bs-name { font-size: .85rem; font-weight: 700; color: #2c5234; }
+    .bs-name { font-size: .85rem; font-weight: 700; color: #2c5234; text-decoration: none; }
     .bs-role { font-size: .76rem; color: #2c5234; }
-    .bs-linkedin { font-size: .74rem; color: #2c5234; margin-top: .1rem; }
-    .breakout-speaker {
-      display: flex; align-items: center; gap: .75rem; padding-top: .5rem;
-      border-top: 1px solid #2c5234; text-decoration: none; color: inherit;
-    }
-    .breakout-speaker div { display: flex; flex-direction: column; gap: .2rem; }
-    .breakout-speaker .bs-name { font-size: .88rem; }
-    .breakout-speaker:hover .bs-name { text-decoration: underline; }
+    a.bs-name:hover { text-decoration: underline; }
 
     /* ── SCHEDULE ── */
-    #schedule { padding: 4rem 0; background: #ffffff; }
+    #schedule { padding: 4rem 0 1.8rem; background: #ffffff; }
     #schedule .section-title { color: #2c5234; }
 
     .sched-item {
@@ -162,19 +160,25 @@
     .sched-item:last-child { border-bottom: none; }
     .sched-item-time { font-size: .8rem; font-weight: 700; color: var(--muted); white-space: nowrap; padding-top: .15rem; }
     .sched-item-title  { font-size: .95rem; font-weight: 700; color: #2c5234; margin-bottom: .2rem; }
-    .sched-item-speaker { font-size: .82rem; color: var(--muted); margin-bottom: .2rem; font-style: italic; }
-    .sched-item-desc   { font-size: .83rem; color: var(--muted); line-height: 1.5; }
+    .sched-item-speaker { font-size: .82rem; color: var(--muted); margin-bottom: .2rem; font-weight: 700; }
+    .sched-item-desc   { font-size: .83rem; color: var(--muted); line-height: 1.3; }
     .sched-item-right  { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: .5rem; }
     .sched-item-location { font-size: .78rem; color: var(--muted); white-space: nowrap; }
     .sched-type-keynote .sched-item-title { color: var(--gold); }
-    .sched-type-breakout { background: rgba(44,82,52,.03); border-radius: var(--radius); padding: 1rem; margin: .25rem 0; }
-    .sched-type-breakout .sched-item-title { color: #2c5234; }
+    .sched-type-keynote .sched-item-speaker { color: var(--gold); }
+    .sched-slot-list {
+      grid-column: 1 / -1; display: flex; flex-direction: column; gap: .5rem;
+      margin-top: .6rem; padding-top: .6rem; border-top: 1px dashed var(--border);
+    }
+    .sched-slot-row { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem 1.5rem; align-items: center; }
+    .sched-slot-content { grid-column: 2; display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+    .sched-slot-label { font-size: .85rem; font-weight: 600; color: var(--gold); text-align: left; }
     .sched-view-btn {
-      font-size: .75rem; font-weight: 700; padding: .3rem .85rem; border-radius: 6px;
-      border: 1.5px solid var(--blue); background: transparent; color: var(--blue);
+      font-size: .75rem; font-weight: 700; padding: .3rem .85rem; border-radius: 20px;
+      border: 1.5px solid var(--gold); background: var(--gold); color: #fff;
       cursor: pointer; transition: all .15s; white-space: nowrap;
     }
-    .sched-view-btn:hover { background: var(--blue); color: #fff; }
+    .sched-view-btn:hover { background: #a3814a; border-color: #a3814a; }
 
     .reg-cta {
       margin-top: 2rem; background: linear-gradient(135deg, var(--blue-dk) 0%, var(--teal) 100%);
@@ -191,10 +195,15 @@
     }
     .reg-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
 
+    @media (max-width: 900px) {
+      .breakout-grid { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 640px) {
+      .breakout-grid { grid-template-columns: 1fr; }
       .lad-strip { grid-template-columns: 1fr 1fr; }
       .lad-cell:not(:last-child) { border-right: none; border-bottom: 1.5px solid var(--border); }
       .lad-arrow { display: none; }
+      .lad-learn h3 { white-space: normal; }
       .sched-item { grid-template-columns: 1fr; gap: .4rem; }
       .sched-item-right { align-items: flex-start; text-align: left; }
       .reg-cta-content { flex-direction: column; }
@@ -232,19 +241,22 @@
       <div class="lad-cell lad-disciple">
         <div class="lad-label">Disciple</div>
         <h3>Faith &amp; Formation</h3>
-        <p>Integrate AI thoughtfully into your Christ-centered mission, stewarding technology to shape students of wisdom and character.</p>
+        <p>Integrate AI into your Christ-centered mission, stewarding technology to shape students of wisdom and character.</p>
       </div>
     </div>
+  </div>
 
+  <!-- CONFERENCE SCHEDULE -->
+  <section id="schedule">
+    <div class="section" style="padding-top: 0; padding-bottom: 0;">
+      <div class="section-title">Conference Schedule</div>
+      <p class="section-sub" style="color:var(--muted);">August 5, 2026 · Westminster Christian School — HS Campus. Click "View Sessions" on a breakout row to explore concurrent options.</p>
+      <div id="scheduleGrid"></div>
+    </div>
+  </section>
+
+  <div class="section" style="padding-top: 2rem; padding-bottom: 0;">
     <div class="breakout-filter" id="breakoutFilter">
-      <div class="filter-row">
-        <span class="filter-label">Category:</span>
-        <button class="filter-btn active" data-cat="All">All</button>
-        <button class="filter-btn" data-cat="Learn">Learn</button>
-        <button class="filter-btn" data-cat="Equip">Equip</button>
-        <button class="filter-btn" data-cat="Aspire">Aspire</button>
-        <button class="filter-btn" data-cat="Disciple">Disciple</button>
-      </div>
       <div class="filter-row">
         <span class="filter-label">Session:</span>
         <button class="filter-btn active" data-slot="All">All</button>
@@ -252,22 +264,22 @@
         <button class="filter-btn" data-slot="2">Session 2 · 10:00 AM</button>
         <button class="filter-btn" data-slot="3">Session 3 · 11:00 AM</button>
       </div>
+      <div class="filter-row">
+        <span class="filter-label">Grade Level:</span>
+        <button class="filter-btn active" data-grade="All">All</button>
+        <button class="filter-btn" data-grade="ES">Elementary (ES)</button>
+        <button class="filter-btn" data-grade="MS">Middle School (MS)</button>
+        <button class="filter-btn" data-grade="HS">High School (HS)</button>
+        <button class="filter-btn" data-grade="Admin">Administrator (Admin)</button>
+      </div>
     </div>
 
     <div class="breakout-grid" id="breakoutGrid"></div>
-  </div>
-</section>
 
-<!-- CONFERENCE SCHEDULE -->
-<section id="schedule">
-  <div class="section" style="padding-top: 0; padding-bottom: 0;">
-    <div class="section-title">Conference Schedule</div>
-    <p class="section-sub" style="color:var(--muted);">August 5, 2026 · Westminster Christian School — HS Campus. Click "View Sessions" on a breakout row to explore concurrent options.</p>
-    <div id="scheduleGrid"></div>
     <div class="reg-cta">
       <div class="reg-cta-content">
         <div class="reg-cta-text">
-          <strong>Ready to attend?</strong> Browse the breakout sessions above, then complete your registration — spaces are limited and capacity fills quickly.
+          <strong>Unfortunately, you can't attend every session!</strong> After finding the ones that interest you most, complete your registration. Spots are limited.
         </div>
         <a class="reg-cta-btn" href="https://forms.office.com/r/c7MKTGSTdS" target="_blank" rel="noopener noreferrer">Register for Your Sessions →</a>
       </div>
@@ -282,9 +294,11 @@ const FULL_SCHEDULE = [
   { time: "7:00–8:00 AM",     event: "Breakfast & Check-In",      desc: "Participants arrive, enjoy breakfast, connect with colleagues, and pick up conference materials.",                     location: "Breezeway / SAC",         type: "logistics" },
   { time: "8:00–8:30 AM",     event: "Welcome & Worship",         desc: "Opening welcome and worship to center hearts and minds for the day.",                                                 location: "Lighthouse",              type: "plenary",  speaker: "Scott Jones & Katie Moon" },
   { time: "8:30–8:45 AM",     event: "Keynote Address",           desc: "Vision-setting keynote focused on AI with purpose, wisdom, and excellence in Christian education.",                   location: "Lighthouse",              type: "keynote",  speaker: "Angie Spivak Lopez" },
-  { time: "9:00–9:45 AM",     event: "Breakout Session 1",        desc: "Choice-based sessions offering practical strategies, foundational knowledge, or classroom applications of AI.",       location: "Assigned Breakout Rooms", type: "breakout", slot: 1 },
-  { time: "10:00–10:45 AM",   event: "Breakout Session 2",        desc: "Choice-based sessions offering practical strategies, foundational knowledge, or classroom applications of AI.",                  location: "Assigned Breakout Rooms", type: "breakout", slot: 2 },
-  { time: "11:00–11:45 AM",   event: "Breakout Session 3",        desc: "Choice-based sessions offering practical strategies, foundational knowledge, or classroom applications of AI.",                     location: "Assigned Breakout Rooms", type: "breakout", slot: 3 },
+  { time: "9:00–11:45 AM",    event: "Breakout Sessions 1–3",     desc: "Choice-based sessions offering practical AI strategies and classroom applications.",       location: "Assigned Breakout Rooms", type: "breakout-group", slots: [
+      { slot: 1, time: "9:00–9:45 AM" },
+      { slot: 2, time: "10:00–10:45 AM" },
+      { slot: 3, time: "11:00–11:45 AM" },
+    ] },
   { time: "11:45 AM–1:00 PM", event: "Lunch & AI Expo",           desc: "Lunch, networking, and time to explore resources, information tables, and conference handouts.",                     location: "Breezeway / SAC",         type: "logistics" },
 ];
 
@@ -302,21 +316,45 @@ const BREAKOUT_SESSIONS = [
   { id: 110, category: "Equip", grade: "Middle School",               slot: 2, room: 7, capacity: 25,  title: "AI in the Middle School Language Arts Classroom", desc: "Discover how AI can support writing instruction, reading comprehension, and student voice in the middle school LA classroom. This session offers concrete examples and classroom-tested strategies.", speaker: { name: "Loralyn Pybas", role: "Middle School Language Arts Teacher", org: "Westminster Christian School", init: "LP", color: "#7c5c3c", linkedin: "" } },
   { id: 111, category: "Equip", grade: "Elementary",                  slot: 1, room: 6, capacity: 25,  title: "AI in the Elementary Language Arts Classroom", desc: "A collaborative session exploring how AI tools can enrich early literacy, storytelling, and language development in elementary classrooms — with practical take-aways for the year ahead.", speaker: { name: "Sarah Cline", role: "Elementary Teacher", org: "Westminster Christian School", init: "SC", color: "#5b72b0", linkedin: "" }, speaker2: { name: "Michelle Brito", role: "Elementary Teacher", org: "Westminster Christian School", init: "MB", color: "#b34740", linkedin: "" } },
   { id: 112, category: "Aspire", grade: "All Grade Levels",           slot: 1, room: 7, capacity: 25,  title: "Ethics in AI: A Christian Educator's Framework", desc: "How do we equip students to navigate the moral complexities of artificial intelligence through a biblical lens? This session provides a framework for teaching AI ethics grounded in Christian truth and character formation.", speaker: { name: "Maggie Izquierdo", role: "Educator", org: "Westminster Christian School", init: "MI", color: "#3d9970", linkedin: "" } },
-  { id: 113, category: "Learn", grade: "Westminster Faculty & Staff", slot: 3, room: 1, capacity: 300, note: "Required for Westminster faculty and staff. Open to any educator interested in learning more about what it means to be a Microsoft Showcase School.", title: "Microsoft Showcase School Kickoff: Ready for 2026–2027", desc: "An essential session for Westminster faculty and staff as we launch another year as a Microsoft Showcase School. Learn what the designation means, what's new for 2026–2027, and how to make the most of our continued Microsoft partnership.", speaker: { name: "Geri Gillespy, PhD", role: "Director - Industry Advisor, Americas", org: "Microsoft Elevate", init: "GG", color: "#4c7d5c", linkedin: "https://www.linkedin.com/in/gerigillespy/" }, speaker2: { name: "Victoria Rose Thompson", role: "Education Strategist", org: "CDW", init: "VT", color: "#3d9970", linkedin: "https://www.linkedin.com/in/victoriarosethompson/" } },
-  { id: 114, category: "Learn", grade: "K-8 Instructional Staff and Leadership", slot: 1, room: 2, capacity: 50, title: "Examining AI in Media Literacy", desc: "Explore how artificial intelligence is reshaping assignments, media creation, consumption, and credibility. Attendees will learn \"do's\" and \"don'ts\" regarding AI generated content, learn how to address deepfakes and misinformation, and teach critical evaluation skills. The session offers classroom-ready strategies for fostering ethical, informed, and responsible media literacy in an AI-driven world across diverse grade levels and disciplines.", speaker: { name: "Victoria Rose Thompson", role: "Education Strategist", org: "CDW", init: "VT", color: "#3d9970", linkedin: "https://www.linkedin.com/in/victoriarosethompson/" } },
-  { id: 118, category: "Learn", grade: "Middle and Upper School", slot: 2, room: 2, capacity: 50, title: "Using AI for College and Career Readiness", desc: "Artificial intelligence (AI) can enhance college and career readiness programs for students! In this session, instructional and CTE staff will learn about AI-powered tools that can help students identify career interests, explore college options, and personalize their learning pathways. Attendees will discover how AI can assist in providing real-time feedback on student progress, track skills development, and connect students with relevant opportunities in higher education and the workforce. By integrating AI into college and career readiness instruction, educators can empower students to make informed decisions, set realistic goals, and prepare effectively for their future endeavors.", speaker: { name: "Victoria Rose Thompson", role: "Education Strategist", org: "CDW", init: "VT", color: "#3d9970", linkedin: "https://www.linkedin.com/in/victoriarosethompson/" } },
+  { id: 113, category: "Learn", grade: "Westminster Faculty & Staff", slot: 3, room: 1, capacity: 300, note: "Required for Westminster faculty and staff. Open to any educator interested in learning more about what it means to be a Microsoft Showcase School.", title: "Microsoft Showcase School Kickoff: Ready for 2026–2027", desc: "An essential session for Westminster faculty and staff as we launch another year as a Microsoft Showcase School. Learn what the designation means, what's new for 2026–2027, and how to make the most of our continued Microsoft partnership.", speaker: { name: "Geri Gillespy, PhD", role: "Director - Industry Advisor, Americas", org: "Microsoft Elevate", init: "GG", color: "#4c7d5c", linkedin: "https://www.linkedin.com/in/gerigillespy/" } },
   { id: 116, category: "Equip", grade: "All Grade Levels",            slot: 1, room: 1, capacity: 50,  title: "Thinking With AI: AI Literacy Versus AI Dependency", desc: "This session will focus on understanding how AI can be integrated across the learning continuum based on Bloom’s revised taxonomy.", speaker: { name: "Geri Gillespy, PhD", role: "Director - Industry Advisor, Americas", org: "Microsoft Elevate", init: "GG", color: "#4c7d5c", linkedin: "https://www.linkedin.com/in/gerigillespy/" } },
   { id: 119, category: "Equip", grade: "All Grade Levels",            slot: 2, room: 1, capacity: 50,  title: "Reframing Work With Copilot Chat: From Task to Impact", desc: "This session shows educators how Copilot Chat can connect everyday tasks to instructional goals and system priorities. Participants will explore simple, high-impact examples that build confidence and move them from consuming AI to creating with it. They will also reflect on current practices to identify opportunities for greater efficiency, alignment, and instructional impact.", speaker: { name: "Geri Gillespy, PhD", role: "Director - Industry Advisor, Americas", org: "Microsoft Elevate", init: "GG", color: "#4c7d5c", linkedin: "https://www.linkedin.com/in/gerigillespy/" } },
 ];
 
 let activeBreakoutCat = "All";
 let activeBreakoutSlot = "All";
+let activeBreakoutGrade = "All";
 
-function renderSpeakerBlock(sp) {
-  const inner = `<div class="bs-name">${sp.name}</div><div class="bs-role">${sp.role}</div>${sp.org ? `<div class="bs-role">${sp.org}</div>` : ''}${sp.linkedin ? `<div class="bs-linkedin">View LinkedIn →</div>` : ''}`;
-  return sp.linkedin
-    ? `<a class="breakout-speaker" href="${sp.linkedin}" target="_blank" rel="noopener noreferrer"><div>${inner}</div></a>`
-    : `<div class="breakout-speaker" style="cursor:default"><div>${inner}</div></div>`;
+function gradeLevels(grade) {
+  if (!grade) return [];
+  if (/All Grade Levels/i.test(grade)) return ["ES", "MS", "HS"];
+  const levels = [];
+  if (/PreK|Elementary/i.test(grade)) levels.push("ES");
+  if (/Middle/i.test(grade)) levels.push("MS");
+  if (/Upper|High School/i.test(grade)) levels.push("HS");
+  if (/Administrator/i.test(grade)) levels.push("Admin");
+  return levels;
+}
+
+function gradeAbbrev(grade) {
+  const levels = gradeLevels(grade);
+  if (levels.length === 3 && !levels.includes("Admin")) return "All";
+  return levels.length ? levels.join("/") : grade;
+}
+
+function renderSpeakerEntry(sp) {
+  const nameHtml = sp.linkedin
+    ? `<a class="bs-name" href="${sp.linkedin}" target="_blank" rel="noopener noreferrer">${sp.name}</a>`
+    : `<div class="bs-name">${sp.name}</div>`;
+  const roleLine = [sp.role, sp.org].filter(Boolean).join(", ");
+  return `
+    <div class="speaker-entry">
+      <div class="bs-avatar" style="background:${sp.color}">${sp.init}</div>
+      <div>
+        ${nameHtml}
+        ${roleLine ? `<div class="bs-role">${roleLine}</div>` : ''}
+      </div>
+    </div>`;
 }
 
 function renderBreakouts() {
@@ -325,7 +363,8 @@ function renderBreakouts() {
   const sortedSessions = [...BREAKOUT_SESSIONS].sort((a, b) => a.slot - b.slot || a.room - b.room || a.id - b.id);
   const filtered = sortedSessions.filter(b =>
     (activeBreakoutCat === "All" || b.category === activeBreakoutCat) &&
-    (slotNum === null || b.slot === slotNum)
+    (slotNum === null || b.slot === slotNum) &&
+    (activeBreakoutGrade === "All" || gradeLevels(b.grade).includes(activeBreakoutGrade))
   );
 
   let currentSlot = null;
@@ -344,25 +383,17 @@ function renderBreakouts() {
       <div class="breakout-card" id="card-${b.id}">
         <div class="breakout-card-top">
           <div class="breakout-tags">
-            <span class="cat-pill cat-${b.category}">${b.category}</span>
-            ${b.grade ? `<span class="grade-pill">${b.grade}</span>` : ''}
             ${b.slot != null ? `<span class="slot-pill">Session ${b.slot} · Breakout ${currentRoom}</span>` : ''}
-            ${b.capacity ? `<span class="cap-pill">Cap: ${b.capacity}</span>` : ''}
+            ${b.grade ? `<span class="grade-pill" title="${b.grade}">${gradeAbbrev(b.grade)}</span>` : ''}
           </div>
           <h3>${b.title}</h3>
           ${b.note ? `<div class="session-note">${b.note}</div>` : ''}
           <div class="speaker-top">
-            <div class="bs-avatar" style="background:${sp.color}">${sp.init}</div>
-            ${sp2 ? `<div class="bs-avatar" style="background:${sp2.color}">${sp2.init}</div>` : ''}
-            <div>
-              <div class="bs-name">${sp.name}${sp2 ? ` &amp; ${sp2.name}` : ''}</div>
-              ${sp.org ? `<div class="bs-role">${sp.org}</div>` : ''}
-            </div>
+            ${renderSpeakerEntry(sp)}
+            ${sp2 ? renderSpeakerEntry(sp2) : ''}
           </div>
         </div>
         <div class="desc">${b.desc}</div>
-        ${renderSpeakerBlock(sp)}
-        ${sp2 ? renderSpeakerBlock(sp2) : ''}
       </div>`;
   }).join("") || `<p style="color:var(--muted);">No sessions in this category yet.</p>`;
 }
@@ -378,6 +409,10 @@ document.getElementById("breakoutFilter").addEventListener("click", e => {
     document.querySelectorAll("#breakoutFilter .filter-btn[data-slot]").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     activeBreakoutSlot = btn.dataset.slot;
+  } else if (btn.dataset.grade !== undefined) {
+    document.querySelectorAll("#breakoutFilter .filter-btn[data-grade]").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeBreakoutGrade = btn.dataset.grade;
   }
   renderBreakouts();
 });
@@ -385,29 +420,40 @@ document.getElementById("breakoutFilter").addEventListener("click", e => {
 function filterBySlot(slot) {
   activeBreakoutCat = "All";
   activeBreakoutSlot = String(slot);
+  activeBreakoutGrade = "All";
   document.querySelectorAll("#breakoutFilter .filter-btn[data-cat]").forEach(b => b.classList.toggle("active", b.dataset.cat === "All"));
   document.querySelectorAll("#breakoutFilter .filter-btn[data-slot]").forEach(b => b.classList.toggle("active", b.dataset.slot === String(slot)));
+  document.querySelectorAll("#breakoutFilter .filter-btn[data-grade]").forEach(b => b.classList.toggle("active", b.dataset.grade === "All"));
   renderBreakouts();
-  document.getElementById("breakouts").scrollIntoView({ behavior: "smooth" });
+  document.getElementById("breakoutFilter").scrollIntoView({ behavior: "smooth" });
 }
 
 function renderSchedule() {
   const container = document.getElementById("scheduleGrid");
   if (!container) return;
   container.innerHTML = FULL_SCHEDULE.map(item => {
-    const isBreakout = item.type === "breakout";
+    const isBreakoutGroup = item.type === "breakout-group";
     return `
       <div class="sched-item sched-type-${item.type}">
         <div class="sched-item-time">${item.time}</div>
         <div class="sched-item-body">
           <div class="sched-item-title">${item.event}</div>
-          ${item.speaker ? `<div class="sched-item-speaker">${item.speaker}</div>` : ''}
           <div class="sched-item-desc">${item.desc}</div>
         </div>
         <div class="sched-item-right">
+          ${item.speaker ? `<div class="sched-item-speaker">${item.speaker}</div>` : ''}
           <div class="sched-item-location">${item.location}</div>
-          ${isBreakout ? `<button class="sched-view-btn" onclick="filterBySlot(${item.slot})">View Sessions →</button>` : ''}
         </div>
+        ${isBreakoutGroup ? `
+        <div class="sched-slot-list">
+          ${item.slots.map(s => `
+            <div class="sched-slot-row">
+              <div class="sched-slot-content">
+                <span class="sched-slot-label">Session ${s.slot} · ${s.time}</span>
+                <button class="sched-view-btn" onclick="filterBySlot(${s.slot})">View Sessions →</button>
+              </div>
+            </div>`).join('')}
+        </div>` : ''}
       </div>`;
   }).join('');
 }
