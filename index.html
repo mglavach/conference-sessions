@@ -6,7 +6,7 @@
   <title>Sessions — AI with Purpose 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -31,38 +31,40 @@
 
     .section { padding: 4rem 1.5rem; max-width: 1100px; margin: 0 auto; }
     .section-title { font-size: 1.8rem; font-weight: 700; margin-bottom: .4rem; }
-    .section-sub { color: var(--muted); margin-bottom: 2.5rem; }
+    .section-sub { color: var(--muted); margin-bottom: 1.5rem; line-height: 1.4; }
 
     /* ── BREAKOUT SESSIONS ── */
     #breakouts { padding: 4rem 0; background: #f1f5f1; }
     #breakouts .section-title { color: var(--green); }
 
     .lad-strip {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
-      border: 1.5px solid var(--border); border-radius: var(--radius);
-      overflow: hidden; margin-bottom: 2.5rem;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem;
+      margin-bottom: 2.5rem;
     }
     .lad-cell {
-      padding: 1.4rem 1.6rem; background: var(--surface); position: relative;
+      padding: 1.5rem 1.6rem; background: var(--surface);
+      border: 1px solid var(--lad-color); position: relative;
     }
-    .lad-cell:not(:last-child) { border-right: 1.5px solid var(--border); }
+    .lad-badge {
+      width: 38px; height: 38px; border-radius: 50%; background: var(--gold);
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      font-family: 'Noto Serif', serif; font-weight: 700; font-size: 1.1rem;
+      margin: 0 auto .7rem;
+    }
     .lad-label {
       font-size: .7rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
-      margin-bottom: .3rem;
+      margin-bottom: .3rem; color: var(--gold);
     }
-    .lad-learn   .lad-label { color: #2c5234; }
-    .lad-equip   .lad-label { color: #B99758; }
-    .lad-aspire  .lad-label { color: #1d6b8a; }
-    .lad-disciple .lad-label { color: #6d28d9; }
-    .lad-cell h3 { font-size: .95rem; font-weight: 700; margin-bottom: .4rem; }
+    .lad-learn    { --lad-color: #2c5234; }
+    .lad-equip    { --lad-color: #B99758; }
+    .lad-aspire   { --lad-color: #6b9b78; }
+    .lad-disciple { --lad-color: #d4b06a; }
+    .lad-cell h3 {
+      font-family: 'Noto Serif', serif; font-weight: 700; font-size: 1.1rem;
+      color: var(--green); margin-bottom: .5rem; line-height: 1.25;
+    }
     .lad-learn h3 { white-space: nowrap; }
     .lad-cell p  { font-size: .82rem; color: var(--muted); line-height: 1.5; }
-    .lad-arrow {
-      position: absolute; right: -14px; top: 50%; transform: translateY(-50%);
-      background: var(--border); color: var(--muted); border-radius: 50%;
-      width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
-      font-size: .8rem; z-index: 1;
-    }
 
     .breakout-filter { display: flex; flex-direction: column; gap: .7rem; margin-bottom: 1.8rem; }
     .filter-row { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
@@ -201,8 +203,6 @@
     @media (max-width: 640px) {
       .breakout-grid { grid-template-columns: 1fr; }
       .lad-strip { grid-template-columns: 1fr 1fr; }
-      .lad-cell:not(:last-child) { border-right: none; border-bottom: 1.5px solid var(--border); }
-      .lad-arrow { display: none; }
       .lad-learn h3 { white-space: normal; }
       .sched-item { grid-template-columns: 1fr; gap: .4rem; }
       .sched-item-right { align-items: flex-start; text-align: left; }
@@ -215,30 +215,30 @@
 <!-- BREAKOUT SESSIONS -->
 <section id="breakouts">
   <div class="section" style="padding-top: 0; padding-bottom: 0;">
-    <div class="section-title">Breakout Sessions</div>
-    <p class="section-sub" style="color:var(--muted); margin-bottom:.75rem;">The L.E.A.D. framework reflects Westminster's commitment to purposeful innovation. We do not pursue technology for its own sake. We learn what is changing, equip educators with practical tools, aspire toward stronger learning experiences, and disciple students with wisdom, integrity, and Christ-centered purpose.</p>
-    <p class="section-sub">Browse sessions below, then <a href="https://forms.office.com/r/c7MKTGSTdS" target="_blank" rel="noopener noreferrer" style="color:#2c5234;font-weight:600;">register here</a> — spaces are limited.</p>
+    <div class="section-title">Conference Schedule and Breakout Sessions</div>
+    <p class="section-sub" style="color:var(--muted);">The Keynote Address and Breakout Sessions were designed using the <strong style="color:var(--gold);">L.E.A.D. Framework</strong>, reflecting Westminster's commitment to purposeful innovation. We do not pursue technology for its own sake. We learn what is changing, equip educators with practical tools, aspire toward stronger learning experiences, and disciple students with wisdom, integrity, and Christ-centered purpose.</p>
 
     <div class="lad-strip">
       <div class="lad-cell lad-learn">
+        <div class="lad-badge">L</div>
         <div class="lad-label">Learn</div>
         <h3>Foundations &amp; Confidence</h3>
         <p>Build confidence with foundational AI concepts and strategies that every educator can apply immediately.</p>
-        <div class="lad-arrow">›</div>
       </div>
       <div class="lad-cell lad-equip">
+        <div class="lad-badge">E</div>
         <div class="lad-label">Equip</div>
         <h3>Tools &amp; Practice</h3>
         <p>Equip yourself with practical AI tools and classroom-ready strategies to enhance teaching and learning.</p>
-        <div class="lad-arrow">›</div>
       </div>
       <div class="lad-cell lad-aspire">
+        <div class="lad-badge">A</div>
         <div class="lad-label">Aspire</div>
         <h3>Vision &amp; Innovation</h3>
         <p>Explore forward-thinking possibilities for AI in education and cast vision for what could be in your school community.</p>
-        <div class="lad-arrow">›</div>
       </div>
       <div class="lad-cell lad-disciple">
+        <div class="lad-badge">D</div>
         <div class="lad-label">Disciple</div>
         <h3>Faith &amp; Formation</h3>
         <p>Integrate AI into your Christ-centered mission, stewarding technology to shape students of wisdom and character.</p>
@@ -249,8 +249,6 @@
   <!-- CONFERENCE SCHEDULE -->
   <section id="schedule">
     <div class="section" style="padding-top: 0; padding-bottom: 0;">
-      <div class="section-title">Conference Schedule</div>
-      <p class="section-sub" style="color:var(--muted);">August 5, 2026 · Westminster Christian School — HS Campus. Click "View Sessions" on a breakout row to explore concurrent options.</p>
       <div id="scheduleGrid"></div>
     </div>
   </section>
