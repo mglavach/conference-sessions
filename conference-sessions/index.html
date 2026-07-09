@@ -170,17 +170,19 @@
     .sched-type-keynote .sched-item-speaker { color: var(--gold); }
     .sched-slot-list {
       grid-column: 1 / -1; display: flex; flex-direction: column; gap: .5rem;
-      margin-top: .6rem; padding-top: .6rem; border-top: 1px dashed var(--border);
+      margin-top: .6rem;
     }
     .sched-slot-row { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem 1.5rem; align-items: center; }
     .sched-slot-content { grid-column: 2; display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
     .sched-slot-label { font-size: .85rem; font-weight: 600; color: var(--gold); text-align: left; }
     .sched-view-btn {
-      font-size: .75rem; font-weight: 700; padding: .3rem .85rem; border-radius: 20px;
-      border: 1.5px solid var(--gold); background: var(--gold); color: #fff;
+      display: inline-block; font-size: .75rem; font-weight: 700; padding: .3rem .85rem; border-radius: 20px;
+      border: 1.5px solid var(--gold); background: var(--gold); color: #fff; text-decoration: none;
       cursor: pointer; transition: all .15s; white-space: nowrap;
     }
     .sched-view-btn:hover { background: #a3814a; border-color: #a3814a; }
+    .sched-view-btn-green { border-color: var(--green); background: var(--green); }
+    .sched-view-btn-green:hover { background: var(--blue-dk); border-color: var(--blue-dk); }
 
     .reg-cta {
       margin-top: 2rem; background: linear-gradient(135deg, var(--blue-dk) 0%, var(--teal) 100%);
@@ -292,12 +294,12 @@ const FULL_SCHEDULE = [
   { time: "7:00–8:00 AM",     event: "Breakfast & Check-In",      desc: "Participants arrive, enjoy breakfast, connect with colleagues, and pick up conference materials.",                     location: "Breezeway / SAC",         type: "logistics" },
   { time: "8:00–8:30 AM",     event: "Welcome & Worship",         desc: "Opening welcome and worship to center hearts and minds for the day.",                                                 location: "Lighthouse",              type: "plenary",  speaker: "Scott Jones & Katie Moon" },
   { time: "8:30–8:45 AM",     event: "Keynote Address",           desc: "Vision-setting keynote focused on AI with purpose, wisdom, and excellence in Christian education.",                   location: "Lighthouse",              type: "keynote",  speaker: "Angie Spivak Lopez" },
-  { time: "9:00–11:45 AM",    event: "Breakout Sessions 1–3",     desc: "Choice-based sessions offering practical AI strategies and classroom applications.",       location: "Assigned Breakout Rooms", type: "breakout-group", slots: [
+  { time: "9:00–11:45 AM",    event: "Breakout Sessions 1–3",     desc: "Choice-based sessions offering practical AI strategies and classroom applications.",       location: "Assigned Breakout Rooms", type: "breakout-group", link: { label: "View and Connect with Speakers →", url: "https://www.wcsmiami.org/event-details#content_3556533" }, slots: [
       { slot: 1, time: "9:00–9:45 AM" },
       { slot: 2, time: "10:00–10:45 AM" },
       { slot: 3, time: "11:00–11:45 AM" },
     ] },
-  { time: "11:45 AM–1:00 PM", event: "Lunch & AI Expo",           desc: "Lunch, networking, and time to explore resources, information tables, and conference handouts.",                     location: "Breezeway / SAC",         type: "logistics" },
+  { time: "11:45 AM–1:00 PM", event: "Lunch & AI Expo",           desc: "Lunch, networking, and time to explore resources, information tables, and conference handouts.",                     location: "Breezeway / SAC",         type: "logistics", link: { label: "View Expo Booths →", url: "https://www.wcsmiami.org/event-details#content_3557261" } },
 ];
 
 const BREAKOUT_SESSIONS = [
@@ -440,6 +442,7 @@ function renderSchedule() {
         </div>
         <div class="sched-item-right">
           ${item.speaker ? `<div class="sched-item-speaker">${item.speaker}</div>` : ''}
+          ${item.link ? `<a class="sched-view-btn sched-view-btn-green" href="${item.link.url}" target="_blank" rel="noopener noreferrer">${item.link.label}</a>` : ''}
           <div class="sched-item-location">${item.location}</div>
         </div>
         ${isBreakoutGroup ? `
