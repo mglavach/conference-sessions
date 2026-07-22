@@ -199,6 +199,16 @@
     }
     .reg-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
 
+    .icymi-cta {
+      margin-top: 1rem; background: linear-gradient(135deg, #8a6d3f 0%, var(--gold) 100%);
+      border-radius: var(--radius); padding: 1.5rem 2rem;
+    }
+    .icymi-cta .reg-cta-btn { color: #8a6d3f; }
+    .icymi-btn.icymi-disabled {
+      background: rgba(255,255,255,.55); color: rgba(138,109,63,.7);
+      cursor: not-allowed; pointer-events: none; box-shadow: none;
+    }
+
     @media (max-width: 900px) {
       .breakout-grid { grid-template-columns: 1fr 1fr; }
     }
@@ -282,6 +292,15 @@
           <strong>Unfortunately, you can't attend every session!</strong> After finding the ones that interest you most, complete your registration. Spots are limited.
         </div>
         <a class="reg-cta-btn" href="https://forms.office.com/r/c7MKTGSTdS" target="_blank" rel="noopener noreferrer">Register for Your Sessions →</a>
+      </div>
+    </div>
+
+    <div class="icymi-cta">
+      <div class="reg-cta-content">
+        <div class="reg-cta-text">
+          <strong>In Case You Missed It!</strong> Photos, resources, and session highlights will be posted after the conference.
+        </div>
+        <a id="icymiBtn" class="reg-cta-btn icymi-btn" href="recap.html">Click here to continue LEADing! →</a>
       </div>
     </div>
   </div>
@@ -461,6 +480,20 @@ function renderSchedule() {
 
 renderBreakouts();
 renderSchedule();
+
+const ICYMI_ACTIVATION = new Date('2026-08-05T18:00:00');
+(function updateIcymiState() {
+  const btn = document.getElementById('icymiBtn');
+  if (!btn) return;
+  if (new Date() >= ICYMI_ACTIVATION) {
+    btn.href = 'recap.html';
+  } else {
+    btn.classList.add('icymi-disabled');
+    btn.removeAttribute('href');
+    btn.setAttribute('aria-disabled', 'true');
+    btn.addEventListener('click', e => e.preventDefault());
+  }
+})();
 </script>
 </body>
 </html>
